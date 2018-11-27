@@ -1,0 +1,7 @@
+Tai khoan dang nhap app:(quyen admin)
+ - Ten dang nhap: Admin
+ - Mat khau: admin
+
+Tai khoan dang nhap app:(quyen user)
+ - Ten dang nhap: User
+ - Mat khau: user

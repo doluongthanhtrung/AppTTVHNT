@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/item_trang_chu"
+            android:title="Trang chủ"/>
+        <item
+            android:id="@+id/item_ds_gv"
+            android:title="Danh sách Giảng viên"/>
+        <item
+            android:id="@+id/item_ds_lop"
+            android:title="Danh sách lớp"/>
+        <item
+            android:id="@+id/item_ds_ctv"
+            android:title="Danh sách Cộng tác viên"/>
+        <item
+            android:id="@+id/item_danh_sach_iso"
+            android:title="Danh sách ISO"/>
+        <item
+            android:id="@+id/item_nhat_ky_sh"
+            android:title="Nhật ký sinh hoạt" />
+        <item
+            android:id="@+id/item_theo_doi_sv"
+            android:title="Tình trạng sinh hoạt"
+            />
+    </group>
+</menu>

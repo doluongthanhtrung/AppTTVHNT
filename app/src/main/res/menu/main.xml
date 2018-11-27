@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_logout"
+        android:layout_width="wrap_content"
+        android:orderInCategory="100"
+        android:title="Đăng xuất"/>
+    <item
+        android:id="@+id/action_DoiMatKhau"
+        android:layout_width="wrap_content"
+        android:orderInCategory="100"
+        android:title="Đổi mật khẩu"/>
+    <item
+        android:id="@+id/action_info"
+        android:layout_width="wrap_content"
+        android:orderInCategory="100"
+        android:title="Giới thiệu"/>
+
+</menu>
