@@ -51,7 +51,7 @@ public class NhatKySinhHoat extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.theo_doi_sv,container,false);
+        View view=inflater.inflate(R.layout.nhat_ky_sinh_hoat,container,false);
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fabnhatky);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

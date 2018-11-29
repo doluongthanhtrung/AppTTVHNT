@@ -43,7 +43,6 @@ import java.util.Map;
 public class DanhSachCTV extends ListFragment {
     ArrayList<ItemHS_GV> arrayList;
     ItemHS_GVApdater apdater;
-    DemoDatabase database;
     TextView TieuDe;
     String manv,sdt,clb;
     EditText HoTen,SDT;
@@ -77,8 +76,6 @@ public class DanhSachCTV extends ListFragment {
 
         View view=inflater.inflate(R.layout.danh_sach_ctv, container, false);
 
-        database=new DemoDatabase(getActivity());
-        database.addDefualtdataIfNeed();
 
         arrayList=new ArrayList<>();
         Toast.makeText(getActivity(), "Đang tải dữ liệu...", Toast.LENGTH_SHORT).show();

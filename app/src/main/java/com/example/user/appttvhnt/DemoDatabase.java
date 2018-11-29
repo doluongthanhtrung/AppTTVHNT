@@ -55,142 +55,84 @@ public class DemoDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE IF NOT EXISTS TaiKhoan(TenDangNhap VARCHAR(20) PRIMARY KEY,MatKhau VARCHAR(20) NOT NULL,LoaiTaiKhoan INTEGER)");
-        db.execSQL("CREATE TABLE IF NOT EXISTS CauLacBo(MaCLB VARCHAR(10) PRIMARY KEY,TenCLB NVARCHAR(100),IsFull INTEGER)");
-        db.execSQL("CREATE TABLE IF NOT EXISTS SinhVien(MSSV VARCHAR(12) PRIMARY KEY,HoTen VARCHAR(100) NOT NULL,Sdt INTEGER,MaCLB VARCHAR(10) NOT NULL)");
-        db.execSQL("CREATE TABLE IF NOT EXISTS NhanVien(MaNV VARCHAR(15) PRIMARY KEY,HoTen VARCHAR(100) NOT NULL,Sdt INTEGER,ChucVu VARCHAR(50))");
-        db.execSQL("CREATE TABLE IF NOT EXISTS GiangVien(MaCLB VARCHAR(10) PRIMARY KEY,MaNV VARCHAR(15))");
-        db.execSQL("CREATE TABLE IF NOT EXISTS TaiLieuISO(MaISO INTEGER PRIMARY KEY,NoiDung VARCHAR(100),Trang INTEGER)");
-        db.execSQL("CREATE TABLE IF NOT EXISTS DiemDanh(MaDD INTEGER PRIMARY KEY AUTOINCREMENT,MSSV VARCHAR(12),date TEXT)");
+
+        db.execSQL("CREATE TABLE CauLacBo ( MaCLB varchar(25) NOT NULL PRIMARY KEY,TenCLB varchar(255) NOT NULL)");
+        addCLBData();
+
+        db.execSQL("CREATE TABLE LichSinhHoat (ID int(11) NOT NULL PRIMARY KEY AUTOINCREMENT,MaCLB varchar(20) NOT NULL,Thu int(11) NOT NULL,Gio varchar(10) NOT NULL)");
+        addLSHData();
+
+        db.execSQL("CREATE TABLE DiemDanhSV (MaDD int(11) NOT NULL PRIMARY KEY AUTOINCREMENT,MaCLB varchar(20) NOT NULL,MSSV int(11) NOT NULL,Ngay varchar(20) NOT NULL,TrangThai int(11) NOT NULL,LyDo varchar(255) DEFAULT NULL)");
+        addDDSVData();
+    }
+
+    private void addDDSVData() {
+        SQLiteDatabase db=getWritableDatabase();
+        db.execSQL("INSERT INTO DiemDanhSV VALUES(10, 'GT1', 1711050077, '15/10/2018', 0, '')");
+        db.execSQL("INSERT INTO DiemDanhSV VALUES(17, 'EV-PR2', 1711230746, '15/10/2018', 1, '')");
+        db.execSQL("INSERT INTO DiemDanhSV VALUES(7, 'DX', 1711060790, '15/10/2018', 0, 'bệnh')");
+        db.execSQL("INSERT INTO DiemDanhSV VALUES(6, 'DX', 1611700825, '15/10/2018', 1, '')");
+        db.execSQL("INSERT INTO DiemDanhSV VALUES(11, 'GT1', 1711050077, '15/10/2018', 0, '')");
+        db.execSQL("INSERT INTO DiemDanhSV VALUES(12, 'EV-PR1', 1711100176, '15/10/2018', 0, 'bệnh')");
+        db.execSQL("INSERT INTO DiemDanhSV VALUES(13, 'EV-PR2', 1711141893, '15/10/2018', 0, 'bệnh')");
+        db.execSQL("INSERT INTO DiemDanhSV VALUES(16, 'EV-PR2', 1711141893, '15/10/2018', 0, '')");
+        db.execSQL("INSERT INTO DiemDanhSV VALUES(15, 'GT2', 1511201198, '15/10/2018', 0, '')");
+        db.execSQL("INSERT INTO DiemDanhSV VALUES(18, 'EV-PR2', 1711701141, '15/10/2018', 0, '')");
+        db.execSQL("INSERT INTO DiemDanhSV VALUES(19, 'EV-PR2', 1711170480, '15/10/2018', 0, '')");
+        db.execSQL("INSERT INTO DiemDanhSV VALUES(20, 'GT1', 1711050077, '21/10/2018', 1, '')");
+        db.execSQL("INSERT INTO DiemDanhSV VALUES(21, 'GT1', 1711060855, '21/10/2018', 0, '')");
+        db.execSQL("INSERT INTO DiemDanhSV VALUES(22, 'GT1', 1711050077, '21/10/2018', 1, '')");
+        db.execSQL("INSERT INTO DiemDanhSV VALUES(23, 'GT1', 1711050077, '23/10/2018', 1, '')");
+        db.execSQL("INSERT INTO DiemDanhSV VALUES(24, 'DX', 1711143536, '23/10/2018', 1, '')");
+        db.execSQL("INSERT INTO DiemDanhSV VALUES(25, 'EV-PR1', 1711100176, '23/10/2018', 1, '')");
+        db.execSQL("INSERT INTO DiemDanhSV VALUES(26, 'EV-PR1', 1711230214, '23/10/2018', 0, '')");
+        db.execSQL("INSERT INTO DiemDanhSV VALUES(27, 'EV-PR1', 1711143368, '23/10/2018', 1, '')");
+        db.execSQL("INSERT INTO DiemDanhSV VALUES(28, 'DX', 1611700825, '23/10/2018', 1, '')");
+        db.execSQL("INSERT INTO DiemDanhSV VALUES(29, 'DX', 1711061253, '23/10/2018', 0, '')");
+        db.execSQL("INSERT INTO DiemDanhSV VALUES(30, 'DX', 1711200152, '23/10/2018', 1, '')");
+    }
+
+    private void addLSHData() {
+        SQLiteDatabase db=getWritableDatabase();
+        db.execSQL("INSERT INTO LichSinhHoat VALUES(1, 'DX', 2, '16:30')");
+        db.execSQL("INSERT INTO LichSinhHoat VALUES(2, 'DX', 4, '16h30')");
+        db.execSQL("INSERT INTO LichSinhHoat VALUES(3, 'EV-PR1', 3, '18h30')");
+        db.execSQL("INSERT INTO LichSinhHoat VALUES(4, 'EV-PR1', 5, '16h30')");
+        db.execSQL("INSERT INTO LichSinhHoat VALUES(5, 'EV-PR2', 5, '18h30')");
+        db.execSQL("INSERT INTO LichSinhHoat VALUES(6, 'EV-PR2', 7, '18h30')");
+        db.execSQL("INSERT INTO LichSinhHoat VALUES(7, 'GT1', 2, '18h30')");
+        db.execSQL("INSERT INTO LichSinhHoat VALUES(8, 'GT1', 5, '18h30')");
+        db.execSQL("INSERT INTO LichSinhHoat VALUES(9, 'GT2', 3, '14h30')");
+        db.execSQL("INSERT INTO LichSinhHoat VALUES(10, 'GT2', 7, '14h30')");
+        db.execSQL("INSERT INTO LichSinhHoat VALUES(11, 'GT3', 4, '16h30')");
+        db.execSQL("INSERT INTO LichSinhHoat VALUES(12, 'GT3', 7, '14h30')");
+        db.execSQL("INSERT INTO LichSinhHoat VALUES(13, 'PI1', 5, '18h30')");
+        db.execSQL("INSERT INTO LichSinhHoat VALUES(14, 'PI1', 7, '18h30')");
+        db.execSQL("INSERT INTO LichSinhHoat VALUES(15, 'PI2', 3, '9h30')");
+        db.execSQL("INSERT INTO LichSinhHoat VALUES(16, 'PI2', 5, '9h30')");
+        db.execSQL("INSERT INTO LichSinhHoat VALUES(17, 'TN1', 3, '18h30')");
+        db.execSQL("INSERT INTO LichSinhHoat VALUES(18, 'TN1', 6, '18h30')");
+        db.execSQL("INSERT INTO LichSinhHoat VALUES(19, 'TN2', 2, '9h20')");
+        db.execSQL("INSERT INTO LichSinhHoat VALUES(20, 'TN2', 6, '9h30')");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS TaiKhoan");
-        db.execSQL("DROP TABLE IF EXISTS CauLacBo");
-        db.execSQL("DROP TABLE IF EXISTS SinhVien");
-        db.execSQL("DROP TABLE IF EXISTS NhanVien");
-        db.execSQL("DROP TABLE IF EXISTS TaiLieuISO");
 
-        onCreate(db);
-    }
-
-    //Dữ liệu mặc đinh
-    public void addDefualtdataIfNeed(){
-        if(getTaiKhoanCount()==0){
-            addTaiKhoanData();
-        } else if(getCLBCount()==0){
-            addCLBData();
-        } else if(getNhanVienCount()==0) {
-            addNhanVienData();
-        } else if(getGiangVienCount()==0){
-            addGiangVienData();
-        } else if(getSinhVienCount()==0){
-            addSinhVienData();
-        } else if(getTaiLieuISOCount()==0){
-            addTaiLieuISOData();
-        }
-    }
-
-    private void addGiangVienData() {
-        SQLiteDatabase db=getWritableDatabase();
-        db.execSQL("INSERT INTO GiangVien VALUES('TN1','TTT')");
-        db.execSQL("INSERT INTO GiangVien VALUES('GT1','CH')");
-        db.execSQL("INSERT INTO GiangVien VALUES('Pi1','YHD')");
-        db.execSQL("INSERT INTO GiangVien VALUES('TN2','TTT')");
-        db.execSQL("INSERT INTO GiangVien VALUES('GT2','CH')");
-        db.execSQL("INSERT INTO GiangVien VALUES('Pi2','YHD')");
-        db.execSQL("INSERT INTO GiangVien VALUES('DX','MP')");
-        db.execSQL("INSERT INTO GiangVien VALUES('EV-PR','BPT')");
-    }
-
-    private void addNhanVienData() {
-        SQLiteDatabase db=getWritableDatabase();
-        db.execSQL("INSERT INTO NhanVien VALUES('LNS','Nguyễn Sỹ Luân',null,'GĐ')");
-        db.execSQL("INSERT INTO NhanVien VALUES('TND','Nguyễn Duy Thịnh',null,'PGĐ')");
-        db.execSQL("INSERT INTO NhanVien VALUES('HLT','Lê Thanh Hiệp',0823916502,'CTV')");
-        db.execSQL("INSERT INTO NhanVien VALUES('THS','Hoàng Sinh Trung',0947165733,'CTV')");
-        db.execSQL("INSERT INTO NhanVien VALUES('TLD','Lữ Đình Trương',null,'CTV')");
-        db.execSQL("INSERT INTO NhanVien VALUES('TLKT','Lê Khổng Thanh Toàn',0903373014,'CTV')");
-        db.execSQL("INSERT INTO NhanVien VALUES('TTT','Trần Thiện Thảo',null,'GV')");
-        db.execSQL("INSERT INTO NhanVien VALUES('CH','Chình Hân',null,'GV')");
-        db.execSQL("INSERT INTO NhanVien VALUES('YHD','Huỳnh Đông Uyên',null,'GV')");
-        db.execSQL("INSERT INTO NhanVien VALUES('BPT','Phạm Thái Bình',null,'GV')");
-        db.execSQL("INSERT INTO NhanVien VALUES('MP','Mai Phương',null,'GV')");
     }
 
     private void addCLBData() {
         SQLiteDatabase db=getWritableDatabase();
-        db.execSQL("INSERT INTO CauLacBo VALUES('TN1','Thanh nhạc 1',0)");
-        db.execSQL("INSERT INTO CauLacBo VALUES('TN2','Thanh nhạc 2',1)");
-        db.execSQL("INSERT INTO CauLacBo VALUES('GT1','Guitar 1',1)");
-        db.execSQL("INSERT INTO CauLacBo VALUES('GT2','Guitar 2',0)");
-        db.execSQL("INSERT INTO CauLacBo VALUES('Pi1','Piano 1',0)");
-        db.execSQL("INSERT INTO CauLacBo VALUES('Pi2','Piano 2',1)");
-        db.execSQL("INSERT INTO CauLacBo VALUES('DX','Diễn xuất',0)");
-        db.execSQL("INSERT INTO CauLacBo VALUES('EV-PR','Sự kiện truyền thông',0)");
-    }
-
-    private void addTaiKhoanData() {
-        SQLiteDatabase db=getWritableDatabase();
-        db.execSQL("INSERT INTO TaiKhoan VALUES('Admin','admin',0)");
-        db.execSQL("INSERT INTO TaiKhoan VALUES('User','user',1)");
-        db.execSQL("INSERT INTO TaiKhoan VALUES('thanhtrung','password',0)");
-        db.execSQL("INSERT INTO TaiKhoan VALUES('thanhhiep','matkhau',1)");
-
-    }
-
-    private void addSinhVienData() {
-        SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("INSERT INTO SinhVien VALUES(1711140933,'Huỳnh Thị Tường Vi',886789756,'TN1')");
-        db.execSQL("INSERT INTO SinhVien VALUES(1711240418,'Nguyễn Thị Anh Thư',1296671155,'TN1')");
-        db.execSQL("INSERT INTO SinhVien VALUES(1711160290,'Trương Nguyễn Phương Trang',967792532,'TN1')");
-        db.execSQL("INSERT INTO SinhVien VALUES(1711290051,'Lê Thị Hồng Nhiên',1229638258,'TN1')");
-        db.execSQL("INSERT INTO SinhVien VALUES(1711160565,'trịnh kim ngân',1666199495,'TN1')");
-        db.execSQL("INSERT INTO SinhVien VALUES(1711290172,'Phạm Thị Cẩm Thúy',911652420,'TN2')");
-        db.execSQL("INSERT INTO SinhVien VALUES(1611701164,'La Ngọc Liên',1296286957,'TN2')");
-        db.execSQL("INSERT INTO SinhVien VALUES(1711700026,'Vũ Thị Ngọc Anh',961414856,'TN2')");
-        db.execSQL("INSERT INTO SinhVien VALUES(1711700901,'Phan Ngọc Quỳnh Như',1222738878,'TN2')");
-        db.execSQL("INSERT INTO SinhVien VALUES(1711700471,'Hà Trang Vân',1863844697,'TN2')");
-        db.execSQL("INSERT INTO SinhVien VALUES(1711270039,'HỒ NGỌC ĐIỆP HÂN',907208082,'Pi1')");
-        db.execSQL("INSERT INTO SinhVien VALUES(1711141299,'Lê Tường Vi',1662447099,'Pi1')");
-        db.execSQL("INSERT INTO SinhVien VALUES(1711170154,'Nguyễn Hoàng Oanh',981771714,'Pi1')");
-        db.execSQL("INSERT INTO SinhVien VALUES(1711150454,'Thai thuy yen nhi',1648097571,'Pi1')");
-        db.execSQL("INSERT INTO SinhVien VALUES(1511270149,'Trần Uyên Trâm',983278945,'Pi1')");
-        db.execSQL("INSERT INTO SinhVien VALUES(1711290223,'Dương Lê Ngọc Nguyệt',963313610,'Pi2')");
-        db.execSQL("INSERT INTO SinhVien VALUES(1711150394,'Phan Thị Thu Hà',1638311329,'Pi2')");
-        db.execSQL("INSERT INTO SinhVien VALUES(1711060425,'Nguyễn Thái Đức',1214357984,'Pi2')");
-        db.execSQL("INSERT INTO SinhVien VALUES(1711040495,'Trang Minh Vũ',947539798,'Pi2')");
-        db.execSQL("INSERT INTO SinhVien VALUES(1711190241,'Nguyễn Thị Tuyết Nhung',1668105211,'Pi2')");
-        db.execSQL("INSERT INTO SinhVien VALUES(1711150088,'TRẦN TÙNG LINH',1215870239,'GT1')");
-        db.execSQL("INSERT INTO SinhVien VALUES(1711062058,'Nguyễn Ngọc Thông',1669625514,'GT1')");
-        db.execSQL("INSERT INTO SinhVien VALUES(1711140092,'Hứa Hướng Dương',946482747,'GT1')");
-        db.execSQL("INSERT INTO SinhVien VALUES(1711140015,'Lâm Tuấn Anh',1246684263,'GT1')");
-        db.execSQL("INSERT INTO SinhVien VALUES(1711290169,'Mai Hoàng Phúc',908707928,'GT1')");
-        db.execSQL("INSERT INTO SinhVien VALUES(1711060855,'Trần Đức Thanh',1282941742,'GT2')");
-        db.execSQL("INSERT INTO SinhVien VALUES(1711050077,'Đỗ Trọng Tín',943160454,'GT2')");
-        db.execSQL("INSERT INTO SinhVien VALUES(1711230557,'Đoàn Tấn Phong',927765360,'GT2')");
-        db.execSQL("INSERT INTO SinhVien VALUES(1711161453,'Trần Khánh Vân',932310990,'GT2')");
-        db.execSQL("INSERT INTO SinhVien VALUES(1711240155,'Lưu Hoàng Vũ',933536376,'GT2')");
-        db.execSQL("INSERT INTO SinhVien VALUES(1711701754,'Phạm Huỳnh Anh Thư',908758281,'DX')");
-        db.execSQL("INSERT INTO SinhVien VALUES(1611700825,'Quách Ngọc Bảo Châu',1204683239,'DX')");
-        db.execSQL("INSERT INTO SinhVien VALUES(1711060790,'Phạm Anh Hào',869367707,'DX')");
-        db.execSQL("INSERT INTO SinhVien VALUES(1711200152,'Nguyễn hoàng yến linh',1627143301,'DX')");
-        db.execSQL("INSERT INTO SinhVien VALUES(1711200422,'Võ Thanh Phú',928593810,'DX')");
-        db.execSQL("INSERT INTO SinhVien VALUES(1711700720,'Mai Khả Ngọc',1678299608,'EV-PR')");
-        db.execSQL("INSERT INTO SinhVien VALUES(1711230214,'NGUYỄN THANH UYÊN',902496128,'EV-PR')");
-        db.execSQL("INSERT INTO SinhVien VALUES(1711170138,'Võ Hoàng Yến Nhi',1217046499,'EV-PR')");
-        db.execSQL("INSERT INTO SinhVien VALUES(1711100176,'Nguyễn Thị Thanh',1647798596,'EV-PR')");
-        db.execSQL("INSERT INTO SinhVien VALUES(1711141893,'Trần Thị Thanh Thiên',1284541695,'EV-PR')");
-    }
-
-    private void addTaiLieuISOData() {
-        SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("INSERT INTO TaiLieuISO VALUES(0,'Cơ cấu Trung tâm',1)");
-        db.execSQL("INSERT INTO TaiLieuISO VALUES(1,'Văn bản hoạt động VHNT',5)");
-        db.execSQL("INSERT INTO TaiLieuISO VALUES(2,'Cuộc thi MISS HUTECH',10)");
-        db.execSQL("INSERT INTO TaiLieuISO VALUES(3,'Các khóa học ngắn hạn',20)");
-        db.execSQL("INSERT INTO TaiLieuISO VALUES(4,'Văn bản hoạt động Trung tâm',25)");
+        db.execSQL("INSERT INTO CauLacBo VALUES('TN1','Thanh nhạc 1')");
+        db.execSQL("INSERT INTO CauLacBo VALUES('TN2','Thanh nhạc 2')");
+        db.execSQL("INSERT INTO CauLacBo VALUES('GT1','Guitar 1')");
+        db.execSQL("INSERT INTO CauLacBo VALUES('GT2','Guitar 2')");
+        db.execSQL("INSERT INTO CauLacBo VALUES('GT3','Guitar 3')");
+        db.execSQL("INSERT INTO CauLacBo VALUES('PI1','Piano 1')");
+        db.execSQL("INSERT INTO CauLacBo VALUES('PI2','Piano 2')");
+        db.execSQL("INSERT INTO CauLacBo VALUES('DX','Diễn xuất')");
+        db.execSQL("INSERT INTO CauLacBo VALUES('EV-PR1','Sự kiện truyền thông 1')");
+        db.execSQL("INSERT INTO CauLacBo VALUES('EV-PR2','Sự kiện truyền thông 2')");
     }
 
     public int getTaiKhoanCount() {
@@ -328,16 +270,17 @@ public class DemoDatabase extends SQLiteOpenHelper {
         return isoList;
     }
 
-    public ArrayList<ItemHS_GV> getDSCLB(){
-        ArrayList<ItemHS_GV> clbList=new ArrayList<ItemHS_GV>();
+    public ArrayList<LichSinhHoat> getDSCLB(ArrayList<ItemHS_GV> SVList){
+        ArrayList<LichSinhHoat> clbList=new ArrayList<>();
         SQLiteDatabase db=getReadableDatabase();
-        Cursor cursor=db.rawQuery("SELECT * FROM CauLacBo",null);
+        Cursor cursor=db.rawQuery("SELECT * FROM CauLacBo ",null);
         if (cursor.moveToFirst()) {
             do {
-                ItemHS_GV clb = new ItemHS_GV();
-                clb.setId(cursor.getString(0));
-                clb.setHoten(cursor.getString(1));
-
+                LichSinhHoat clb = new LichSinhHoat();
+                clb.setMaCLB(cursor.getString(0));
+                clb.setTenCLB(cursor.getString(1));
+                clb.setSoLuong(String.valueOf(getDDSVData(clb.getMaCLB())));
+                clb.setTong(String.valueOf(CountSVByCLB(SVList,clb.getMaCLB())));
                 // Thêm vào danh sách.
                 clbList.add(clb);
             } while (cursor.moveToNext());
@@ -347,6 +290,71 @@ public class DemoDatabase extends SQLiteOpenHelper {
         return clbList;
     }
 
+    private int CountSVByCLB(ArrayList<ItemHS_GV> SVList,String maclb){
+        int dem=0;
+        for(int i=0;i<SVList.size();i++){
+            if(SVList.get(i).getChucvu().equals(maclb)){
+                dem++;
+            }
+        }
+        return dem;
+    }
+    public int getDDSVData(String maclb) {
+        String query="SELECT MSSV FROM dbo.LichSinhHoat WHERE MaCLB='"+maclb+"'";
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        int count = cursor.getCount();
+
+        cursor.close();
+
+        return count;
+    }
+
+    public ArrayList<LichSinhHoat> getDSCLBByThu(ArrayList<ItemHS_GV> SVList, int thu){
+        ArrayList<LichSinhHoat> clbList=new ArrayList<>();
+        SQLiteDatabase db=getReadableDatabase();
+        Cursor cursor=db.rawQuery("SELECT l.ID, c.MaCLB, c.TenCLB, l.Thu, l.Gio FROM dbo.caulacbo c, dbo.LichSinhHoat l WHERE c.MaCLB=l.MaCLB",null);
+        if (cursor.moveToFirst()) {
+            do {
+                LichSinhHoat clb = new LichSinhHoat();
+                clb.setID(cursor.getInt(0));
+                clb.setMaCLB(cursor.getString(1));
+                clb.setTenCLB(cursor.getString(2));
+                clb.setThu(cursor.getInt(3));
+                clb.setGio(cursor.getString(4));
+                clb.setSoLuong(String.valueOf(getDDSVData(clb.getMaCLB())));
+                clb.setTong(String.valueOf(CountSVByCLB(SVList,clb.getMaCLB())));
+
+                // Thêm vào danh sách.
+                if(clb.getThu()==thu){
+                    clbList.add(clb);
+                }
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return clbList;
+    }
+
+    public ArrayList<ItemHS_GV> getDSCLBFull() {
+        ArrayList<ItemHS_GV> clblist = new ArrayList<ItemHS_GV>();
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM CauLacBo", null);
+        if (cursor.moveToFirst()) {
+            do {
+                ItemHS_GV CLB = new ItemHS_GV();
+                CLB.setId(cursor.getString(0));
+                CLB.setHoten(cursor.getString(1));
+
+                // Thêm vào danh sách.
+                clblist.add(CLB);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return clblist;
+    }
     public ArrayList<ItemHS_GV> getDSCTV(){
         ArrayList<ItemHS_GV> ctvList=new ArrayList<ItemHS_GV>();
         SQLiteDatabase db=getReadableDatabase();

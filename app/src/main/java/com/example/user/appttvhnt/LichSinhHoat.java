@@ -6,8 +6,8 @@ public class LichSinhHoat {
     private String TenCLB;
     private int Thu;
     private String Gio;
-    private String Tong;
-    private String SoLuong;
+    private String Tong="";
+    private String SoLuong="";
 
     public LichSinhHoat() {
     }

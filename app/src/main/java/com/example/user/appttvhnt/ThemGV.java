@@ -50,7 +50,6 @@ public class ThemGV extends Fragment {
     EditText MaNV,HoTen,SDT;
     RadioButton CTV,GV;
     String manv,hoten,clb,sdt;
-    DemoDatabase database;
     OnClickButtonThemNV click;
     ArrayList<ItemHS_GV> clbList;
     Spinner spinner;
@@ -71,9 +70,6 @@ public class ThemGV extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.them_gv, container, false);
-
-        database=new DemoDatabase(getActivity());
-        database.addDefualtdataIfNeed();
 
         AnhXa(view);
         Bundle bundle=getArguments();

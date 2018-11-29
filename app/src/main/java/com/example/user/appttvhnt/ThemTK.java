@@ -33,7 +33,6 @@ public class ThemTK extends Fragment {
     EditText TenDangNhap,MatKhau,ReMatKhau;
     RadioButton Admin,User;
     String tendangnhap,matkhau,rematkhau,loaitaikhoan;
-    DemoDatabase database;
     OnClickButtonTK onClickButtonTK;
     final String URLTHEMTK="http://thanhtrungcnttk15.atwebpages.com/insertTK.php";
 
@@ -51,8 +50,7 @@ public class ThemTK extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.them_tai_khoan, container, false);
-        database=new DemoDatabase(getActivity());
-        database.addDefualtdataIfNeed();
+
         AnhXa(view);
         btThem.setOnClickListener(new View.OnClickListener() {
             @Override

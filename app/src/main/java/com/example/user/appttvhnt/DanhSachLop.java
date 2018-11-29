@@ -44,10 +44,10 @@ import java.util.Random;
 
 public class DanhSachLop extends Fragment{
 
-    ArrayList<ItemHS_GV> clblist;
     ArrayList<LichSinhHoat> CLBbyLSH;
+    ArrayList<ItemHS_GV> clblist;
     ArrayList<String> CLBList,thu;
-    CLBListApdater adapter;
+    ArrayAdapter adapter;
     ListView lv;
     OnClickTenCLB onClickTenCLB;
     FloatingActionButton fabLop,fabThem,fabXoa;
@@ -57,12 +57,10 @@ public class DanhSachLop extends Fragment{
     OvershootInterpolator interpolator=new OvershootInterpolator();
     boolean isMenuOpen;
     int ltk;
-    final String URLGETDATACLB="http://thanhtrungcnttk15.atwebpages.com/getdataCLB.php";
-    final String URLGETDATALSH="http://thanhtrungcnttk15.atwebpages.com/getdatalichsinhhoat.php";
     final String URLGETDATASV="http://thanhtrungcnttk15.atwebpages.com/getDSSV.php";
+    final String URLGETDATACLB="http://thanhtrungcnttk15.atwebpages.com/getdataCLB.php";
     final String URLTHEMCLB="http://thanhtrungcnttk15.atwebpages.com/insertCLB.php";
     final String URLXOACLB="http://thanhtrungcnttk15.atwebpages.com/xoaCLB.php";
-    private List<ItemHS_GV> arraySVList;
 
     public interface OnClickTenCLB{
         public void onSelectTenCLB(String id, String TenCLB);
@@ -83,15 +81,16 @@ public class DanhSachLop extends Fragment{
         lv=(ListView) view.findViewById(R.id.listViewLop);
         THU=(Spinner) view.findViewById(R.id.spinnerThu);
 
-        clblist=new ArrayList<>();
-        CLBbyLSH=new ArrayList<>();
-        getdata();
-
         thu=new ArrayList<>();
         getdataThu();
         ArrayAdapter arrayAdapter=new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_item,thu);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         THU.setAdapter(arrayAdapter);
+
+        //arraySVList=new ArrayList<>();
+        //CLBbyLSH=new ArrayList<>();
+        clblist=new ArrayList<>();
+        getdata();
 
         ltk=getArguments().getInt("LoaiTaiKhoan");
         if(ltk==1) {
@@ -154,7 +153,7 @@ public class DanhSachLop extends Fragment{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(getActivity(), "Vui lòng chờ...", Toast.LENGTH_SHORT).show();
-                onClickTenCLB.onSelectTenCLB(CLBbyLSH.get(position).getMaCLB(),CLBbyLSH.get(position).getTenCLB());
+                onClickTenCLB.onSelectTenCLB(clblist.get(position).getId(),clblist.get(position).getHoten());
             }
         });
 
@@ -163,13 +162,84 @@ public class DanhSachLop extends Fragment{
 
     private void getdataThu() {
         thu.add("Tất cả");
+        thu.add("Chủ nhật");
         thu.add("Thứ 2");
         thu.add("Thứ 3");
         thu.add("Thứ 4");
         thu.add("Thứ 5");
         thu.add("Thứ 6");
         thu.add("Thứ 7");
-        thu.add("Chủ nhật");
+    }
+
+    /*private void getdataSV(){
+        RequestQueue requestQueue= Volley.newRequestQueue(getActivity());
+        JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(Request.Method.GET, URLGETDATASV, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        arraySVList.clear();
+                        for (int i=0;i<response.length();i++){
+                            try {
+                                JSONObject object=response.getJSONObject(i);
+                                Random rd=new Random();
+                                String buoi= String.valueOf(rd.nextInt(8));
+                                ItemHS_GV sv=new ItemHS_GV();
+                                sv.setId(object.getString("MSSV"));
+                                sv.setHoten(object.getString("HoTenSV").trim());
+                                sv.setSdt(object.getString("SDT"));
+                                sv.setChucvu(object.getString("MaCLB"));
+                                arraySVList.add(sv);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        //getdataCLB(0);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getActivity(),"Lỗi hệ thống: "+error.toString(),Toast.LENGTH_SHORT).show();
+                        Log.d("Loi",error.toString());
+                    }
+                });
+        requestQueue.add(jsonArrayRequest);
+    }*/
+
+    private void getdata() {
+        RequestQueue requestQueue=Volley.newRequestQueue(getActivity());
+        JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(Request.Method.GET, URLGETDATACLB, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        clblist.clear();
+                        for(int i=0;i<response.length();i++){
+                            try {
+                                JSONObject object=response.getJSONObject(i);
+                                ItemHS_GV clb=new ItemHS_GV();
+                                clb.setId(object.getString("MaCLB"));
+                                clb.setHoten(object.getString("TenCLB"));
+                                clblist.add(clb);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        CLBList=new ArrayList<>();
+                        for(int i=0;i<clblist.size();i++){
+                            CLBList.add(clblist.get(i).getHoten());
+                        }
+                        adapter=new ArrayAdapter(getActivity(),android.R.layout.simple_list_item_1,CLBList);
+                        lv.setAdapter(adapter);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getActivity(), "Lỗi hệ thống: "+error.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
+        requestQueue.add(jsonArrayRequest);
     }
 
     private void DialogXoaCLB() {
@@ -193,12 +263,11 @@ public class DanhSachLop extends Fragment{
                             public void onResponse(String response) {
                                 if(response.trim().equals("success")){
                                     Toast.makeText(getActivity(),"Xóa CLB thành công!",Toast.LENGTH_SHORT).show();
-                                    getdataCLB();
+                                    getdata();
                                     dialog.dismiss();
                                 } else {
                                     Toast.makeText(getActivity(),"Lỗi. Xóa CLB không thành công",Toast.LENGTH_SHORT).show();
                                 }
-
                             }
                         },
                         new Response.ErrorListener() {
@@ -211,7 +280,7 @@ public class DanhSachLop extends Fragment{
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String, String> params=new HashMap<>();
-                        params.put("MaCLB",CLBbyLSH.get(CLB.getSelectedItemPosition()).getMaCLB());
+                        params.put("MaCLB",clblist.get(CLB.getSelectedItemPosition()).getId());
                         return params;
                     }
                 };
@@ -246,7 +315,7 @@ public class DanhSachLop extends Fragment{
                             public void onResponse(String response) {
                                 if(response.trim().equals("success")){
                                     Toast.makeText(getActivity(),"Thêm thành công",Toast.LENGTH_SHORT).show();
-                                    getdataCLB();
+                                    getdata();
                                     dialog.dismiss();
                                 } else Toast.makeText(getActivity(),"Lỗi. Thêm không thành công",Toast.LENGTH_SHORT).show();
                             }
@@ -276,117 +345,6 @@ public class DanhSachLop extends Fragment{
             }
         });
         dialog.show();
-    }
-
-    private void getdataCLB() {
-        RequestQueue requestQueue= Volley.newRequestQueue(getActivity());
-        JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(Request.Method.GET, URLGETDATACLB, null,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        //clblist.clear();
-                        for(int i=0;i<response.length();i++){
-                            try {
-                                JSONObject object=response.getJSONObject(i);
-                                ItemHS_GV clb=new ItemHS_GV();
-                                for(int j=0;j<CLBbyLSH.size();j++){
-                                    if(CLBbyLSH.get(j).getMaCLB().equals(object.getString("MaCLB"))){
-                                        CLBbyLSH.get(j).setTenCLB(object.getString("TenCLB"));
-                                    }
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        CLBList=new ArrayList<>();
-                        for(int i=0;i<CLBbyLSH.size();i++){
-                            CLBList.add(CLBbyLSH.get(i).getTenCLB());
-                        }
-                        adapter=new CLBListApdater(getActivity(),R.layout.item_clb,CLBbyLSH);
-                        lv.setAdapter(adapter);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }
-        );
-        requestQueue.add(jsonArrayRequest);
-    }
-
-    private void getdata(){
-        RequestQueue requestQueue= Volley.newRequestQueue(getActivity());
-        JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(Request.Method.GET, URLGETDATALSH, null,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        CLBbyLSH.clear();
-                        for (int i=0;i<response.length();i++){
-                            try {
-                                JSONObject object=response.getJSONObject(i);
-                                LichSinhHoat lsh=new LichSinhHoat();
-                                lsh.setID(object.getInt("ID"));
-                                lsh.setMaCLB(object.getString("MaCLB"));
-                                lsh.setThu(object.getInt("Thu"));
-                                lsh.setGio(object.getString("Gio"));
-                                lsh.setTong(String.valueOf(getdataSV(object.getString("MaCLB"))));
-                                CLBbyLSH.add(lsh);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        getdataCLB();
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getActivity(),"Lỗi hệ thống!"+error.toString(),Toast.LENGTH_SHORT).show();
-                        Log.d("Loi",error.toString());
-                    }
-                });
-        requestQueue.add(jsonArrayRequest);
-    }
-
-    private int getdataSV(final String maclb){
-        RequestQueue requestQueue= Volley.newRequestQueue(getActivity());
-        JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(Request.Method.GET, URLGETDATASV, null,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        arraySVList.clear();
-                        for (int i=0;i<response.length();i++){
-                            try {
-                                JSONObject object=response.getJSONObject(i);
-                                Random rd=new Random();
-                                String buoi= String.valueOf(rd.nextInt(8));
-                                ItemHS_GV sv=new ItemHS_GV();
-                                sv.setId(object.getString("MSSV"));
-                                sv.setHoten(object.getString("HoTenSV").trim());
-                                sv.setSdt(object.getString("SDT"));
-                                sv.setChucvu(object.getString("MaCLB"));
-                                sv.setSobuoi(buoi);
-                                if(sv.getChucvu().equals(maclb)) {
-                                    arraySVList.add(sv);
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getActivity(),"Lỗi hệ thống!"+error.toString(),Toast.LENGTH_SHORT).show();
-                        Log.d("Loi",error.toString());
-                    }
-                });
-        requestQueue.add(jsonArrayRequest);
-        return arraySVList.size();
     }
 
     private void openMenu(){

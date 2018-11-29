@@ -36,7 +36,6 @@ public class ThemSV extends Fragment{
     EditText MSSV,HoTen,SDT;
     RadioButton CTV,GV;
     String mssv,hoten,clb,sdt;
-    DemoDatabase database;
     OnClickButtonThemSV click;
     ArrayList<ItemHS_GV> clbList;
     Spinner spinner;
@@ -58,9 +57,6 @@ public class ThemSV extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.them_sv, container, false);
-
-        database=new DemoDatabase(getActivity());
-        database.addDefualtdataIfNeed();
 
         AnhXa(view);
         clbList=new ArrayList<ItemHS_GV>();

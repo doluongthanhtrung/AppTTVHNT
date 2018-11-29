@@ -47,7 +47,6 @@ public class QuanLyTK extends Fragment {
     ArrayList<TAIKHOAN> arrayList;
     ListView lv;
     TaiKhoanApdater apdater;
-    DemoDatabase database;
     Button btThem, btHuy;
     EditText MatKhau,ReMatKhau;
     RadioButton Admin,User;
@@ -73,8 +72,7 @@ public class QuanLyTK extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.quan_ly_tk, container, false);
 
-        database=new DemoDatabase(getActivity());
-        database.addDefualtdataIfNeed();
+
 
         lv=(ListView) view.findViewById(R.id.listViewTK);
 

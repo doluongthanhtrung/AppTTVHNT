@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        }
+        } else replaceFragmentContent(new TrangChu());
     }
 
     @Override
@@ -191,7 +191,6 @@ public class MainActivity extends AppCompatActivity
 
                 ft.replace(R.id.fr_main, fragment);
 
-                ft.addToBackStack(null);
 
                 ft.commit();
         }
@@ -216,7 +215,7 @@ public class MainActivity extends AppCompatActivity
     public void onSelecitem(int i) {
         switch (i){
             case 0:
-                //replaceFragmentContent(new NhatKySinhHoat());
+                replaceFragmentContent(new NhatKySinhHoat());
                 break;
             case 1:
                 DanhSachGV ds=new DanhSachGV();
@@ -234,6 +233,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case 3:
                 replaceFragmentContent(new DanhSachISO());
+                break;
+            case 4:
+                Toast.makeText(this, "Tính năng đang phát triển", Toast.LENGTH_SHORT).show();
                 break;
         }
     }

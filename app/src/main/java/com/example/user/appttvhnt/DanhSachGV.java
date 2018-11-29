@@ -48,7 +48,6 @@ public class DanhSachGV extends ListFragment {
     ArrayList<ItemHS_GV> CLBItem;
     ArrayList<String> tenclb;
     ItemHS_GVApdater apdater;
-    DemoDatabase database;
     String manv,sdt,clb;
     EditText HoTen,SDT;
     Spinner CLB;
@@ -80,8 +79,7 @@ public class DanhSachGV extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.danh_sach_gv, container, false);
-        database=new DemoDatabase(getActivity());
-        database.addDefualtdataIfNeed();
+
 
         arrayList=new ArrayList<ItemHS_GV>();
         CLBItem=new ArrayList<>();

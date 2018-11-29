@@ -62,8 +62,8 @@ public class DangNhapActivity extends Activity {
             public void onClick(View view) {
                 String tenDangNhap=txttenDangNhap.getText().toString();
                 String matKhau=txtmatKhau.getText().toString();
-                //int kiemtradangnhap=KiemTraDangNhap(tenDangNhap,matKhau); //Code chính thức
-                int kiemtradangnhap=0; //Code for debug (xóa)
+                int kiemtradangnhap=KiemTraDangNhap(tenDangNhap,matKhau); //Code chính thức
+                //int kiemtradangnhap=0; //Code for debug (xóa)
                 if(kiemtradangnhap==0){
                     Toast.makeText(DangNhapActivity.this,"Đăng nhập thành công",Toast.LENGTH_LONG).show();
                     Intent intent=new Intent(DangNhapActivity.this,MainActivity.class);
@@ -138,7 +138,9 @@ public class DangNhapActivity extends Activity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(DangNhapActivity.this,"Lỗi hệ thống!"+error.toString(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DangNhapActivity.this,"Lỗi hệ thống: "+error.toString(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DangNhapActivity.this,"Loading....",Toast.LENGTH_SHORT).show();
+                        getdataTK();
                         Log.d("Loi",error.toString());
                     }
                 });
