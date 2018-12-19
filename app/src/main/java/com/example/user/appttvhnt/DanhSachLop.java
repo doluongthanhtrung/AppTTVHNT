@@ -171,41 +171,6 @@ public class DanhSachLop extends Fragment{
         thu.add("Thứ 7");
     }
 
-    /*private void getdataSV(){
-        RequestQueue requestQueue= Volley.newRequestQueue(getActivity());
-        JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(Request.Method.GET, URLGETDATASV, null,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        arraySVList.clear();
-                        for (int i=0;i<response.length();i++){
-                            try {
-                                JSONObject object=response.getJSONObject(i);
-                                Random rd=new Random();
-                                String buoi= String.valueOf(rd.nextInt(8));
-                                ItemHS_GV sv=new ItemHS_GV();
-                                sv.setId(object.getString("MSSV"));
-                                sv.setHoten(object.getString("HoTenSV").trim());
-                                sv.setSdt(object.getString("SDT"));
-                                sv.setChucvu(object.getString("MaCLB"));
-                                arraySVList.add(sv);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        //getdataCLB(0);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getActivity(),"Lỗi hệ thống: "+error.toString(),Toast.LENGTH_SHORT).show();
-                        Log.d("Loi",error.toString());
-                    }
-                });
-        requestQueue.add(jsonArrayRequest);
-    }*/
-
     private void getdata() {
         RequestQueue requestQueue=Volley.newRequestQueue(getActivity());
         JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(Request.Method.GET, URLGETDATACLB, null,

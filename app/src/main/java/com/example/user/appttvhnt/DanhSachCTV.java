@@ -197,7 +197,7 @@ public class DanhSachCTV extends ListFragment {
     private void DialogXoa(final ItemHS_GV itemHS_gv) {
         AlertDialog.Builder dialog=new AlertDialog.Builder(getActivity());
         dialog.setTitle("Xác nhận");
-        dialog.setMessage("Bạn có muốn xóa tài khoản này không?");
+        dialog.setMessage("Bạn có muốn xóa "+itemHS_gv.getHoten()+" không?");
         dialog.setPositiveButton("Có", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
