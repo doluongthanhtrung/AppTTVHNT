@@ -13,4 +13,5 @@
     <string name="tab_text_3">Tab 3</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="verion">Version: 1.1</string>
+    <string name="no_internet">Thiết bị chưa kết nối Internet. Bật kết nối Interner để tiếp tục!</string>
 </resources>

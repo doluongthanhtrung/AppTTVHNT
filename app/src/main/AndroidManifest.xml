@@ -3,9 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.user.appttvhnt">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".WifiApp"
         android:allowBackup="true"
         android:icon="@drawable/logottvhnt"
         android:label="@string/app_name"
@@ -22,6 +24,13 @@
             android:name=".MainActivity"
             android:label="TTVHNT"
             android:theme="@style/AppTheme.NoActionBar" />
+        <receiver
+            android:name=".ConnectionReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

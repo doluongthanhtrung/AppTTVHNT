@@ -268,13 +268,17 @@ public class MainActivity extends AppCompatActivity
                                 break;
                             }
                         }
-                        DanhSachLopChiTiet ds=new DanhSachLopChiTiet();
-                        Bundle bundle=new Bundle();
-                        bundle.putString("ID",id);
-                        bundle.putString("TENCLB",TenCLB);
-                        bundle.putString("TENGV",TenGV);
-                        ds.setArguments(bundle);
-                        replaceFragmentContent(ds);
+                        if(TenGV.equals("")) {
+                            Toast.makeText(MainActivity.this, "Lớp này chưa có giảng viên", Toast.LENGTH_SHORT).show();
+                        } else {
+                            DanhSachLopChiTiet ds = new DanhSachLopChiTiet();
+                            Bundle bundle = new Bundle();
+                            bundle.putString("ID", id);
+                            bundle.putString("TENCLB", TenCLB);
+                            bundle.putString("TENGV", TenGV);
+                            ds.setArguments(bundle);
+                            replaceFragmentContent(ds);
+                        }
                     }
                 },
                 new Response.ErrorListener() {

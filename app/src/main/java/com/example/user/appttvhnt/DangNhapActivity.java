@@ -3,6 +3,7 @@ package com.example.user.appttvhnt;
 import android.app.Activity;
 import android.app.VoiceInteractor;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -35,66 +36,84 @@ import java.util.Map;
 public class DangNhapActivity extends Activity {
 
     EditText txttenDangNhap, txtmatKhau;
-    Button btndangNhap, btnthoat;
+    Button btndangNhap, btnthoat,btnReload;
     public static final String LOAITAIKHOAN="LoaiTaiKhoan";
     public static final String TENDANGNHAP="TenDangNhap";
     public static final String MATKHAU="MatKhau";
     final String URLGETDATATK="http://thanhtrungcnttk15.atwebpages.com/getdataTK.php";
-    public static ArrayList<TAIKHOAN> arrayList;
+    public ArrayList<TAIKHOAN> arrayList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dang_nhap);
 
-        //Xử lý sự kiện
-        txttenDangNhap= (EditText) findViewById(R.id.txtDangNhap);
-        txtmatKhau=(EditText) findViewById(R.id.txtMatKhau);
-        btndangNhap=(Button) findViewById(R.id.btnDangNhap);
-        btnthoat= (Button) findViewById(R.id.btnThoat);
+        boolean isconnect=ConnectionReceiver.isConnected();
 
-        Toast.makeText(this, "Đang tải dữ liệu...", Toast.LENGTH_SHORT).show();
-
-        arrayList=new ArrayList<>();
-        getdataTK();
-
-        btndangNhap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String tenDangNhap=txttenDangNhap.getText().toString();
-                String matKhau=txtmatKhau.getText().toString();
-                int kiemtradangnhap=KiemTraDangNhap(tenDangNhap,matKhau); //Code chính thức
-                //int kiemtradangnhap=0; //Code for debug (xóa)
-                if(kiemtradangnhap==0){
-                    Toast.makeText(DangNhapActivity.this,"Đăng nhập thành công",Toast.LENGTH_LONG).show();
-                    Intent intent=new Intent(DangNhapActivity.this,MainActivity.class);
-                    Bundle bundle=new Bundle();
-                    bundle.putInt(LOAITAIKHOAN,kiemtradangnhap);
-                    bundle.putString(TENDANGNHAP,tenDangNhap);
-                    bundle.putString(MATKHAU,matKhau);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                    txttenDangNhap.setText("");
-                    txtmatKhau.setText("");
-                } else if(kiemtradangnhap==1){
-                    Toast.makeText(DangNhapActivity.this,"Đăng nhập thành công",Toast.LENGTH_LONG).show();
-                    Intent intent=new Intent(DangNhapActivity.this,MainActivity.class);
-                    Bundle bundle=new Bundle();
-                    bundle.putInt(LOAITAIKHOAN,kiemtradangnhap);
-                    bundle.putString(TENDANGNHAP,tenDangNhap);
-                    bundle.putString(MATKHAU,matKhau);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                    txttenDangNhap.setText("");
-                    txtmatKhau.setText("");
-                } else Toast.makeText(DangNhapActivity.this, "Lỗi đăng nhập. Tài khoản hoặc mật khẩu không trùng khớp",Toast.LENGTH_LONG).show();
+        if (isconnect==false){
+            setContentView(R.layout.activity_dang_nhap_no_internet);
+            btnReload=(Button) findViewById(R.id.buttonReload);
+            btnReload.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (ConnectionReceiver.isConnected()==false){
+                        Toast.makeText(DangNhapActivity.this, "Vui lòng kiểm tra kết nối!", Toast.LENGTH_SHORT).show();
+                    } else{
+                        onCreate(null);
+                    }
                 }
-        });
-        btnthoat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+            });
+        } else{
+            setContentView(R.layout.activity_dang_nhap);
+            txttenDangNhap= (EditText) findViewById(R.id.txtDangNhap);
+            txtmatKhau=(EditText) findViewById(R.id.txtMatKhau);
+            btndangNhap=(Button) findViewById(R.id.btnDangNhap);
+            btnthoat= (Button) findViewById(R.id.btnThoat);
+
+            Toast.makeText(this, "Đang tải dữ liệu...", Toast.LENGTH_SHORT).show();
+
+            arrayList=new ArrayList<>();
+            getdataTK();
+
+            btndangNhap.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String tenDangNhap=txttenDangNhap.getText().toString();
+                    String matKhau=txtmatKhau.getText().toString();
+                    int kiemtradangnhap=KiemTraDangNhap(tenDangNhap,matKhau); //Code chính thức
+                    //int kiemtradangnhap=0; //Code for debug (xóa)
+                    if(kiemtradangnhap==0){
+                        Toast.makeText(DangNhapActivity.this,"Đăng nhập thành công",Toast.LENGTH_LONG).show();
+                        Intent intent=new Intent(DangNhapActivity.this,MainActivity.class);
+                        Bundle bundle=new Bundle();
+                        bundle.putInt(LOAITAIKHOAN,kiemtradangnhap);
+                        bundle.putString(TENDANGNHAP,tenDangNhap);
+                        bundle.putString(MATKHAU,matKhau);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                        txttenDangNhap.setText("");
+                        txtmatKhau.setText("");
+                    } else if(kiemtradangnhap==1){
+                        Toast.makeText(DangNhapActivity.this,"Đăng nhập thành công",Toast.LENGTH_LONG).show();
+                        Intent intent=new Intent(DangNhapActivity.this,MainActivity.class);
+                        Bundle bundle=new Bundle();
+                        bundle.putInt(LOAITAIKHOAN,kiemtradangnhap);
+                        bundle.putString(TENDANGNHAP,tenDangNhap);
+                        bundle.putString(MATKHAU,matKhau);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                        txttenDangNhap.setText("");
+                        txtmatKhau.setText("");
+                    } else Toast.makeText(DangNhapActivity.this, "Lỗi đăng nhập. Tài khoản hoặc mật khẩu không trùng khớp",Toast.LENGTH_LONG).show();
+                }
+            });
+
+            btnthoat.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    finish();
+                }
+            });
+        }
     }
 
     private int KiemTraDangNhap(String tenDangNhap, String matKhau) {

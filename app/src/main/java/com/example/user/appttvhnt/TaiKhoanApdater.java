@@ -35,29 +35,20 @@ public class TaiKhoanApdater extends BaseAdapter {
         return 0;
     }
 
-    private class ViewHolder{
-        TextView txtTenTaiKhoan,txtMatKhau,txtLoaiTaiKhoan;
-    }
-
     @Override
     public View getView(int position, View view, ViewGroup parent) {
-        ViewHolder holder;
-        if(view==null){
-            holder=new ViewHolder();
-            LayoutInflater inflater= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view=inflater.inflate(layout,null);
-            holder.txtTenTaiKhoan=(TextView) view.findViewById(R.id.textViewTenTaiKhoan);
-            holder.txtMatKhau=(TextView) view.findViewById(R.id.textViewMatKhau);
-            holder.txtLoaiTaiKhoan=(TextView) view.findViewById(R.id.textViewLoaiTaiKhoan);
 
-            view.setTag(holder);
-        }else{
-            holder= (ViewHolder) view.getTag();
-        }
+        LayoutInflater inflater= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        view=inflater.inflate(layout,null);
+
+        TextView txtTenTaiKhoan=(TextView) view.findViewById(R.id.textViewTenTaiKhoan);
+        TextView txtMatKhau=(TextView) view.findViewById(R.id.textViewMatKhau);
+        TextView txtLoaiTaiKhoan=(TextView) view.findViewById(R.id.textViewLoaiTaiKhoan);
+
         TAIKHOAN tk=itemList.get(position);
-        holder.txtTenTaiKhoan.setText(tk.getTendangnhap());
-        holder.txtMatKhau.setText(tk.getMatkhau());
-        holder.txtLoaiTaiKhoan.setText(tk.getLoaitaikhoan());
+        txtTenTaiKhoan.setText(tk.getTendangnhap());
+        txtMatKhau.setText(tk.getMatkhau());
+        txtLoaiTaiKhoan.setText(tk.getLoaitaikhoan());
 
         return view;
     }

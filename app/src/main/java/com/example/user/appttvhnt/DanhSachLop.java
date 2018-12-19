@@ -79,13 +79,6 @@ public class DanhSachLop extends Fragment{
 
         Toast.makeText(getActivity(), "Đang tải dữ liệu...", Toast.LENGTH_SHORT).show();
         lv=(ListView) view.findViewById(R.id.listViewLop);
-        THU=(Spinner) view.findViewById(R.id.spinnerThu);
-
-        thu=new ArrayList<>();
-        getdataThu();
-        ArrayAdapter arrayAdapter=new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_item,thu);
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        THU.setAdapter(arrayAdapter);
 
         //arraySVList=new ArrayList<>();
         //CLBbyLSH=new ArrayList<>();
@@ -158,17 +151,6 @@ public class DanhSachLop extends Fragment{
         });
 
         return view;
-    }
-
-    private void getdataThu() {
-        thu.add("Tất cả");
-        thu.add("Chủ nhật");
-        thu.add("Thứ 2");
-        thu.add("Thứ 3");
-        thu.add("Thứ 4");
-        thu.add("Thứ 5");
-        thu.add("Thứ 6");
-        thu.add("Thứ 7");
     }
 
     private void getdata() {

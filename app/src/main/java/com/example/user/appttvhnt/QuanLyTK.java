@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -43,7 +44,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class QuanLyTK extends Fragment {
+public class QuanLyTK extends ListFragment {
     ArrayList<TAIKHOAN> arrayList;
     ListView lv;
     TaiKhoanApdater apdater;
@@ -72,10 +73,6 @@ public class QuanLyTK extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.quan_ly_tk, container, false);
 
-
-
-        lv=(ListView) view.findViewById(R.id.listViewTK);
-
         arrayList=new ArrayList<>();
         getdataTK();
 
@@ -87,18 +84,19 @@ public class QuanLyTK extends Fragment {
             }
         });
 
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                showmenu(arrayList.get(position));
-            }
-        });
 
+        Log.d("QuanLyTK","=====OnCreateView=====");
         return view;
     }
 
-    private void showmenu(TAIKHOAN tk){
-        PopupMenu popupMenu=new PopupMenu(getActivity(),lv);
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        showmenu(arrayList.get(position),l);
+        super.onListItemClick(l, v, position, id);
+    }
+
+    private void showmenu(TAIKHOAN tk,ListView l){
+        PopupMenu popupMenu=new PopupMenu(getActivity(),l);
         popupMenu.getMenuInflater().inflate(R.menu.context_menu,popupMenu.getMenu());
         final TAIKHOAN taikhoan=tk;
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -112,7 +110,6 @@ public class QuanLyTK extends Fragment {
                         DialogSua(taikhoan);
                         break;
                 }
-
                 return false;
             }
         });
@@ -168,12 +165,8 @@ public class QuanLyTK extends Fragment {
         };
         requestQueue.add(stringRequest);
     }
-
-    private void getdata(){
-        apdater=new TaiKhoanApdater(getActivity(),R.layout.item_tai_khoan,DangNhapActivity.arrayList);
-        lv.setAdapter(apdater);
-    }
     private void getdataTK(){
+        Log.d("QuanLyTK","=====getData=====");
         RequestQueue requestQueue= Volley.newRequestQueue(getActivity());
         JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(Request.Method.GET, URLGETDATATK, null,
                 new Response.Listener<JSONArray>() {
@@ -194,8 +187,8 @@ public class QuanLyTK extends Fragment {
                                 e.printStackTrace();
                             }
                         }
-                        apdater=new TaiKhoanApdater(getActivity(),R.layout.item_tai_khoan,DangNhapActivity.arrayList);
-                        lv.setAdapter(apdater);
+                        apdater=new TaiKhoanApdater(getActivity(),R.layout.item_tai_khoan,arrayList);
+                        setListAdapter(apdater);
                     }
                 },
                 new Response.ErrorListener() {
@@ -209,7 +202,7 @@ public class QuanLyTK extends Fragment {
     }
     private void DialogSua(TAIKHOAN tk) {
 
-        Dialog dialog=new Dialog(getActivity());
+        final Dialog dialog=new Dialog(getActivity());
         tendangnhap=tk.getTendangnhap();
         dialog.setContentView(R.layout.sua_tai_khoan);
 
@@ -241,7 +234,7 @@ public class QuanLyTK extends Fragment {
                         tkSua.setMatkhau(matkhau);
                         tkSua.setLoaitaikhoan(loaitaikhoan);
                         UpdateTaiKhoan(tkSua);
-                        //dialog.dismiss();
+                        dialog.dismiss();
                     }
                 }
                     }
@@ -249,7 +242,7 @@ public class QuanLyTK extends Fragment {
         btHuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //dialog.dismiss();
+                dialog.dismiss();
             }
         });
         dialog.show();
