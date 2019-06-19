@@ -1,23 +1,22 @@
-package com.example.user.appttvhnt;
+package com.example.user.appttvhnt.Model;
 
 import android.content.Context;
-import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import com.example.user.appttvhnt.R;
+
 import java.util.List;
 
-public class CLBListApdater extends BaseAdapter {
-
+public class ItemKQApdater extends BaseAdapter {
     private Context context;
     private int layout;
-    private List<LichSinhHoat> itemList;
+    private List<ItemHS_GV> itemList;
 
-    public CLBListApdater(Context context, int layout, List<LichSinhHoat> itemList) {
+    public ItemKQApdater(Context context, int layout, List<ItemHS_GV> itemList) {
         this.context = context;
         this.layout = layout;
         this.itemList = itemList;
@@ -38,28 +37,32 @@ public class CLBListApdater extends BaseAdapter {
         return 0;
     }
 
-    public class ViewHolder{
-        TextView txtTenCLB,txtTong,txtSoLuong;
+    public class ViewHolder {
+        TextView txtTen;
+        TextView txtSDT;
+        TextView txtCLB;
     }
 
     @Override
     public View getView(int i, View view, ViewGroup parent) {
         ViewHolder holder;
-        if(view==null){
+        if (view==null){
             holder=new ViewHolder();
             LayoutInflater inflater= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view=inflater.inflate(layout,null);
 
-            holder.txtTenCLB=(TextView) view.findViewById(R.id.textviewCLB);
-            holder.txtSoLuong=(TextView) view.findViewById(R.id.textviewSoLuong);
-            holder.txtTong=(TextView) view.findViewById(R.id.textviewTong);
-            view.setTag(holder);
-        } else holder= (ViewHolder) view.getTag();
+            holder.txtTen=(TextView) view.findViewById(R.id.textviewHoTen);
+            holder.txtSDT=(TextView) view.findViewById(R.id.textviewSDT);
+            holder.txtCLB=(TextView) view.findViewById(R.id.textViewCLB);
 
-        LichSinhHoat item=itemList.get(i);
-        holder.txtTenCLB.setText(item.getTenCLB());
-        holder.txtTong.setText(String.valueOf(item.getTong()));
-        holder.txtSoLuong.setText(String.valueOf(item.getSoLuong()));
+            view.setTag(holder);
+        }else {
+            holder = (ViewHolder) view.getTag();
+        }
+        ItemHS_GV item=itemList.get(i);
+        holder.txtTen.setText(item.getHoten());
+        holder.txtSDT.setText(item.getSdt());
+        holder.txtCLB.setText(item.getClb());
         return view;
     }
 }

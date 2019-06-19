@@ -1,22 +1,23 @@
-package com.example.user.appttvhnt;
+package com.example.user.appttvhnt.Model;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import com.example.user.appttvhnt.R;
 
 import java.util.List;
 
-public class ItemKQApdater extends BaseAdapter {
+public class ItemApdater extends BaseAdapter {
     private Context context;
     private int layout;
-    private List<ItemHS_GV> itemList;
+    private List<ItemTrangChu> itemList;
 
-    public ItemKQApdater(Context context, int layout, List<ItemHS_GV> itemList) {
+    public ItemApdater(Context context, int layout, List<ItemTrangChu> itemList) {
         this.context = context;
         this.layout = layout;
         this.itemList = itemList;
@@ -28,41 +29,37 @@ public class ItemKQApdater extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public Object getItem(int i) {
         return null;
     }
 
     @Override
-    public long getItemId(int position) {
+    public long getItemId(int i) {
         return 0;
     }
 
-    public class ViewHolder {
+    public class ViewHolder{
         TextView txtTen;
-        TextView txtSDT;
-        TextView txtCLB;
+        ImageView imgHinh;
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup parent) {
+    public View getView(int i, View view, ViewGroup viewGroup) {
         ViewHolder holder;
         if (view==null){
             holder=new ViewHolder();
             LayoutInflater inflater= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view=inflater.inflate(layout,null);
 
-            holder.txtTen=(TextView) view.findViewById(R.id.textviewHoTen);
-            holder.txtSDT=(TextView) view.findViewById(R.id.textviewSDT);
-            holder.txtCLB=(TextView) view.findViewById(R.id.textViewCLB);
-
+            holder.txtTen=(TextView) view.findViewById(R.id.tvTen);
+            holder.imgHinh=(ImageView) view.findViewById(R.id.imgHinh);
             view.setTag(holder);
         }else {
-            holder = (ViewHolder) view.getTag();
+            holder =(ViewHolder) view.getTag();
         }
-        ItemHS_GV item=itemList.get(i);
-        holder.txtTen.setText(item.getHoten());
-        holder.txtSDT.setText(item.getSdt());
-        holder.txtCLB.setText(item.getClb());
+        ItemTrangChu item=itemList.get(i);
+        holder.txtTen.setText(item.getTen());
+        holder.imgHinh.setImageResource(item.getHinh());
         return view;
     }
 }

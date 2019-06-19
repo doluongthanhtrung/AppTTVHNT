@@ -1,4 +1,4 @@
-package com.example.user.appttvhnt;
+package com.example.user.appttvhnt.Model;
 
 import java.io.Serializable;
 

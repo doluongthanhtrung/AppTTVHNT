@@ -1,19 +1,17 @@
-package com.example.user.appttvhnt;
+package com.example.user.appttvhnt.Fragment;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 import android.widget.ListView;
-import android.widget.Toast;
+
+import com.example.user.appttvhnt.Model.ItemApdater;
+import com.example.user.appttvhnt.Model.ItemTrangChu;
+import com.example.user.appttvhnt.R;
 
 import java.util.ArrayList;
 

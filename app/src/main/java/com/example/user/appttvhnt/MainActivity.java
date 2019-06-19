@@ -1,16 +1,11 @@
 package com.example.user.appttvhnt;
 
-import android.app.ActionBar;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.MenuRes;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.text.style.BulletSpan;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,8 +17,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.GridView;
-import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,11 +29,23 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.user.appttvhnt.Fragment.DanhSachCTV;
+import com.example.user.appttvhnt.Fragment.DanhSachGV;
+import com.example.user.appttvhnt.Fragment.DanhSachISO;
+import com.example.user.appttvhnt.Fragment.DanhSachLop;
+import com.example.user.appttvhnt.Fragment.DanhSachLopChiTiet;
+import com.example.user.appttvhnt.Fragment.NhatKySinhHoat;
+import com.example.user.appttvhnt.Fragment.QuanLyTK;
+import com.example.user.appttvhnt.Fragment.ThemGV;
+import com.example.user.appttvhnt.Fragment.ThemSV;
+import com.example.user.appttvhnt.Fragment.ThemTK;
+import com.example.user.appttvhnt.Fragment.TrangChu;
+import com.example.user.appttvhnt.Model.ItemHS_GV;
+import com.example.user.appttvhnt.Model.TAIKHOAN;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,8 +56,8 @@ public class MainActivity extends AppCompatActivity
         TrangChu.ListItemSelect,
         DanhSachLop.OnClickTenCLB,
         ThemTK.OnClickButtonTK,
-        QuanLyTK.ButtonThemClick,ThemGV.OnClickButtonThemNV,
-        DanhSachGV.DanhSachGVCLick,ThemSV.OnClickButtonThemSV,DanhSachLopChiTiet.ThemSV,DanhSachCTV.ThemCTVClick
+        QuanLyTK.ButtonThemClick, ThemGV.OnClickButtonThemNV,
+        DanhSachGV.DanhSachGVCLick, ThemSV.OnClickButtonThemSV, DanhSachLopChiTiet.ThemSV, DanhSachCTV.ThemCTVClick
 {
     int loaitaikhoan;
     Button btThem, btHuy;

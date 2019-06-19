@@ -1,4 +1,4 @@
-package com.example.user.appttvhnt;
+package com.example.user.appttvhnt.Fragment;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -25,6 +25,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.user.appttvhnt.Adapter.NhatKyApdater;
+import com.example.user.appttvhnt.Model.ItemHS_GV;
+import com.example.user.appttvhnt.Model.NhatKy;
+import com.example.user.appttvhnt.R;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

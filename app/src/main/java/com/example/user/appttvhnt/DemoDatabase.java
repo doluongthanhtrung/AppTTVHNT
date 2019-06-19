@@ -1,19 +1,15 @@
 package com.example.user.appttvhnt;
 
-import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PushbackInputStream;
+import com.example.user.appttvhnt.Fragment.LichSinhHoat;
+import com.example.user.appttvhnt.Model.ItemHS_GV;
+import com.example.user.appttvhnt.Model.TAIKHOAN;
+
 import java.util.ArrayList;
-import java.util.List;
 
 public class DemoDatabase extends SQLiteOpenHelper {
 

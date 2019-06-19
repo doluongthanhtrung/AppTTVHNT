@@ -1,10 +1,9 @@
-package com.example.user.appttvhnt;
+package com.example.user.appttvhnt.Fragment;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -14,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -32,6 +30,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.user.appttvhnt.Adapter.ItemHS_GVApdater;
+import com.example.user.appttvhnt.Model.ItemHS_GV;
+import com.example.user.appttvhnt.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,112 +43,79 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DanhSachGV extends ListFragment {
-
+public class DanhSachCTV extends ListFragment {
     ArrayList<ItemHS_GV> arrayList;
-    ArrayList<ItemHS_GV> CLBItem;
-    ArrayList<String> tenclb;
     ItemHS_GVApdater apdater;
+    TextView TieuDe;
     String manv,sdt,clb;
     EditText HoTen,SDT;
     Spinner CLB;
     Button btLuu,btHuy;
-    DanhSachGVCLick ds;
     RadioButton Co, Khong;
     TextView TenSV;
     EditText LyDo;
     Button Luu,Huy;
-    String trangthai="2";
-    int ltk;
-    final String URLGETDATAGV="http://thanhtrungcnttk15.atwebpages.com/getdataGV.php";
-    final String URLGETDATACLB="http://thanhtrungcnttk15.atwebpages.com/getdataCLB.php";
+    String trangthai;
+    ThemCTVClick click;
+    final String URLGETDATACTV="http://thanhtrungcnttk15.atwebpages.com/getdataCTV.php";
     final String URLCAPNHATNV="http://thanhtrungcnttk15.atwebpages.com/capnhatNV.php";
     final String URLXOANV="http://thanhtrungcnttk15.atwebpages.com/xoaNV.php";
     final String URLDIEMDANHNV="http://thanhtrungcnttk15.atwebpages.com/insertDiemDanhNV.php";
+    int ltk;
 
-    public interface DanhSachGVCLick{
-        public void ThemNVCLick(String them);
+    public interface ThemCTVClick{
+        public void ThemCTVClick(String them);
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        ds= (DanhSachGVCLick) activity;
+        click= (ThemCTVClick) activity;
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.danh_sach_gv, container, false);
+
+        View view=inflater.inflate(R.layout.danh_sach_ctv, container, false);
 
 
-        arrayList=new ArrayList<ItemHS_GV>();
-        CLBItem=new ArrayList<>();
+        arrayList=new ArrayList<>();
         Toast.makeText(getActivity(), "Đang tải dữ liệu...", Toast.LENGTH_SHORT).show();
         getData();
-        getDataCLB();
 
         ltk=getArguments().getInt("LoaiTaiKhoan");
         if (ltk==1){
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fabgv);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Bạn không thể thêm giảng viên mới. Chỉ Admin mới có thể làm điều này!", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        } else{
-            FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fabgv);
+            FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fabctv);
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ds.ThemNVCLick("GV");
+                    Snackbar.make(view, "Bạn không thể thêm giảng viên mới. Chỉ Admin mới có thể làm điều này!", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+            });
+        } else{
+            FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fabctv);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    click.ThemCTVClick("CTV");
                 }
             });
         }
+
         return view;
-    }
-
-    private void getDataCLB() {
-        RequestQueue requestQueue= Volley.newRequestQueue(getActivity());
-        JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(Request.Method.GET, URLGETDATACLB, null,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        CLBItem.clear();
-                        for(int i=0;i<response.length();i++){
-                            try {
-                                JSONObject object=response.getJSONObject(i);
-                                ItemHS_GV clb=new ItemHS_GV();
-                                clb.setId(object.getString("MaCLB"));
-                                clb.setHoten(object.getString("TenCLB"));
-                                CLBItem.add(clb);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }
-        );
-        requestQueue.add(jsonArrayRequest);
     }
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         if(ltk==0) {
             showmenu(arrayList.get(position), l,position);
-        } else DialogDiemDanh(position);
+        } else Toast.makeText(getActivity(),"Copy số điện thoại",Toast.LENGTH_LONG).show();
         super.onListItemClick(l, v, position, id);
     }
 
-    private void showmenu(final ItemHS_GV itemHS_gv, ListView lv, final int position ) {
+    private void showmenu(final ItemHS_GV itemHS_gv, ListView lv, final int position) {
         PopupMenu popupMenu=new PopupMenu(getActivity(),lv);
         popupMenu.getMenuInflater().inflate(R.menu.popup_menu,popupMenu.getMenu());
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -162,7 +130,6 @@ public class DanhSachGV extends ListFragment {
                         break;
                     case R.id.item_diem_danh:
                         DialogDiemDanh(position);
-                        break;
                 }
                 return false;
             }
@@ -178,21 +145,16 @@ public class DanhSachGV extends ListFragment {
         CLB=(Spinner) dialog.findViewById(R.id.spinnerclb);
         btLuu=(Button) dialog.findViewById(R.id.buttonLuu);
         btHuy=(Button) dialog.findViewById(R.id.buttonHuy);
-
-        tenclb=new ArrayList<String>();
-        for (int i=0;i<CLBItem.size();i++){
-            tenclb.add(CLBItem.get(i).getHoten());
-        }
-        ArrayAdapter adapter=new ArrayAdapter(getContext(),android.R.layout.simple_spinner_item,tenclb);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        CLB.setAdapter(adapter);
+        TieuDe=(TextView) dialog.findViewById(R.id.textViewCapNhat);
+        CLB.setEnabled(false);
+        TieuDe.setText("Cập nhật CTV");
         btLuu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 manv=itemHS_gv.getId();
                 sdt=SDT.getText().toString();
-                clb=CLBItem.get(CLB.getSelectedItemPosition()).getId();
-                CapNhatGV(manv,sdt);
+                CapNhatNV(manv,sdt);
+                getData();
                 dialog.dismiss();
             }
         });
@@ -205,7 +167,7 @@ public class DanhSachGV extends ListFragment {
         dialog.show();
     }
 
-    private void CapNhatGV(final String manv, final String sdt) {
+    private void CapNhatNV(final String manv, final String sdt) {
         RequestQueue requestQueue=Volley.newRequestQueue(getActivity());
         StringRequest stringRequest=new StringRequest(Request.Method.POST, URLCAPNHATNV,
                 new Response.Listener<String>() {
@@ -242,7 +204,8 @@ public class DanhSachGV extends ListFragment {
         dialog.setPositiveButton("Có", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                DeleteGV(itemHS_gv.getId());
+                DeleteNV(itemHS_gv.getId());
+                getData();
                 dialog.dismiss();
             }
         });
@@ -255,7 +218,7 @@ public class DanhSachGV extends ListFragment {
         dialog.show();
     }
 
-    private void DeleteGV(final String id) {
+    private void DeleteNV(final String id) {
         RequestQueue requestQueue= Volley.newRequestQueue(getActivity());
         StringRequest stringRequest=new StringRequest(Request.Method.POST, URLXOANV,
                 new Response.Listener<String>() {
@@ -286,7 +249,7 @@ public class DanhSachGV extends ListFragment {
 
     private void getData() {
         RequestQueue requestQueue= Volley.newRequestQueue(getActivity());
-        JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(Request.Method.GET, URLGETDATAGV, null,
+        JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(Request.Method.GET, URLGETDATACTV, null,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
@@ -316,6 +279,7 @@ public class DanhSachGV extends ListFragment {
         );
         requestQueue.add(jsonArrayRequest);
     }
+
     private void DialogDiemDanh(final int position) {
         final Dialog dialog=new Dialog(getActivity());
         dialog.setContentView(R.layout.diem_danh_sv);
@@ -331,7 +295,6 @@ public class DanhSachGV extends ListFragment {
         manv=arrayList.get(position).getId();
         Calendar c=Calendar.getInstance();
         final String ngay=c.get(Calendar.DAY_OF_MONTH)+"/"+c.get(Calendar.MONTH)+"/"+c.get(Calendar.YEAR);
-
 
         Luu.setOnClickListener(new View.OnClickListener() {
             @Override

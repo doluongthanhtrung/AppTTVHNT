@@ -1,25 +1,15 @@
-package com.example.user.appttvhnt;
+package com.example.user.appttvhnt.Fragment;
 
-import android.app.ActionBar;
 import android.app.Activity;
-import android.app.Dialog;
-import android.app.VoiceInteractor;
-import android.content.DialogInterface;
-import android.content.ReceiverCallNotAllowedException;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.PopupMenu;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -33,8 +23,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
-import junit.framework.Assert;
+import com.example.user.appttvhnt.Model.ItemHS_GV;
+import com.example.user.appttvhnt.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
