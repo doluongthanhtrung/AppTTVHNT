@@ -34,6 +34,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -101,14 +102,12 @@ public class DanhSachLopChiTiet extends ListFragment {
                         for (int i=0;i<response.length();i++){
                             try {
                                 JSONObject object=response.getJSONObject(i);
-                                Random rd=new Random();
-                                String buoi= String.valueOf(rd.nextInt(8));
                                 ItemHS_GV sv=new ItemHS_GV();
                                 sv.setId(object.getString("MSSV"));
                                 sv.setHoten(object.getString("HoTenSV").trim());
                                 sv.setSdt(object.getString("SDT"));
                                 sv.setChucvu(object.getString("MaCLB"));
-                                sv.setSobuoi(buoi);
+                                sv.setSobuoi(object.getString("Buoi"));
                                 if(sv.getChucvu().equals(maclb)) {
                                     arraySVList.add(sv);
                                 }
@@ -150,7 +149,15 @@ public class DanhSachLopChiTiet extends ListFragment {
         TenSV.setText(arraySVList.get(position).getHoten());
         mssv=arraySVList.get(position).getId();
         Calendar c=Calendar.getInstance();
-        final String ngay=c.get(Calendar.DAY_OF_MONTH)+"/"+c.get(Calendar.MONTH)+"/"+c.get(Calendar.YEAR);
+        Date date=c.getTime();
+        String month="";
+        if(c.get(Calendar.MONTH)+1<10){
+            month="0"+(c.get(Calendar.MONTH)+1);
+        } else{
+            month=String.valueOf(c.get(Calendar.MONTH)+1);
+        }
+        final String ngay=c.get(Calendar.DAY_OF_MONTH)+"/"+month+"/"+c.get(Calendar.YEAR);
+        Toast.makeText(getContext(), ""+ngay, Toast.LENGTH_SHORT).show();
 
         Luu.setOnClickListener(new View.OnClickListener() {
             @Override
